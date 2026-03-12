@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PandaTwins — AI-платформа обучения с персональным AI-учителем и готовыми уроками английского языка. Учись бесплатно и без регистрации.">
-    <meta property="og:title" content="PandaTwins — Уроки английского с AI">
-    <meta property="og:description" content="Интерактивные уроки английского с персональным AI-учителем. Выбери тему и начни заниматься прямо сейчас.">
+    <meta name="description" content="PandaTwins — адаптивная AI-платформа обучения. Уникальный подход под ваш уровень и психотип. От новичка до эксперта.">
+    <meta property="og:title" content="PandaTwins — Адаптивное обучение с AI">
+    <meta property="og:description" content="Персональные уроки английского, которые подстраиваются под вас. Начните с любого уровня.">
     <meta property="og:image" content="https://last-bfmg.vercel.app/og-image.png">
     <meta property="og:type" content="website">
-    <title>PandaTwins — Уроки английского с AI</title>
+    <title>PandaTwins — Адаптивный AI-учитель английского</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -55,7 +55,12 @@
         .step-number {
             background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         }
-        .active-subject {
+        .active-level {
+            background-color: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+        .learning-style-btn.active-style {
             background-color: #10b981;
             color: white;
             border-color: #10b981;
@@ -64,7 +69,7 @@
 </head>
 <body class="bg-gray-50 text-gray-900 overflow-x-hidden">
 
-    <!-- Navigation -->
+    <!-- Navigation (упрощённая) -->
     <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -73,19 +78,18 @@
                     <span class="font-bold text-xl">PandaTwins</span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#subjects" class="text-gray-600 hover:text-emerald-600 transition">Предметы</a>
-                    <a href="#lessons" class="text-gray-600 hover:text-emerald-600 transition">Уроки</a>
                     <a href="#how-it-works" class="text-gray-600 hover:text-emerald-600 transition">Как работает</a>
-                    <a href="#faq" class="text-gray-600 hover:text-emerald-600 transition">FAQ</a>
+                    <a href="#adaptive" class="text-gray-600 hover:text-emerald-600 transition">Адаптивность</a>
+                    <a href="#lessons" class="text-gray-600 hover:text-emerald-600 transition">Уроки</a>
                 </div>
-                <a href="#lessons" class="bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-emerald-700 transition">
-                    Начать урок
+                <a href="#setup" class="bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-emerald-700 transition">
+                    Настроить обучение
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section с акцентом на адаптивность -->
     <section class="relative min-h-screen flex items-center pt-16 overflow-hidden">
         <div class="blob bg-emerald-300 w-96 h-96 top-20 -left-20"></div>
         <div class="blob bg-teal-300 w-80 h-80 bottom-20 right-10"></div>
@@ -95,58 +99,55 @@
                 <div class="scroll-reveal">
                     <div class="inline-flex items-center bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                         <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                        Уроки уже доступны
+                        Adaptive Learning Engine • Для любого уровня
                     </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-                        Учи английский<br>
-                        <span class="gradient-text">с AI-учителем</span>
+                        От полного нуля<br>
+                        <span class="gradient-text">до уровня Павла Дурова</span>
                     </h1>
                     <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        Персональные уроки, адаптированные под твой уровень. 
-                        <span class="font-semibold text-emerald-600">Без регистрации и SMS</span> — просто выбери тему и начни.
+                        Персональный AI-учитель подстраивается под ваш уровень, психотип и цели. 
+                        <span class="font-semibold text-emerald-600">Уникальный подход для каждого</span> — от школьника до топ-менеджера.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#subjects" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105 flex items-center justify-center gap-2">
-                            Выбрать урок
+                        <a href="#setup" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105 flex items-center justify-center gap-2">
+                            Пройти настройку
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                         </a>
                         <a href="#how-it-works" class="bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-full font-bold text-lg hover:border-emerald-500 hover:text-emerald-600 transition flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Как это работает
                         </a>
-                    </div>
-                    <div class="mt-8 flex items-center gap-6 text-sm text-gray-500">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            Бесплатно
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            Без регистрации
-                        </div>
                     </div>
                 </div>
                 <div class="relative scroll-reveal">
                     <div class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl transform rotate-3 opacity-20"></div>
                     <div class="relative bg-white rounded-3xl shadow-2xl p-6 border border-gray-100">
-                        <!-- Mock AI chat -->
+                        <!-- Интерактивный пример адаптивности -->
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b">
                             <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-2xl">🐼</div>
                             <div>
                                 <div class="font-semibold">Panda AI</div>
-                                <div class="text-xs text-gray-500">Онлайн</div>
+                                <div class="text-xs text-gray-500">Адаптивный учитель</div>
                             </div>
                         </div>
                         <div class="space-y-3">
-                            <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 0.2s">
-                                Let's start your English lesson! 🎋 Today we'll learn about greetings.
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+                                👋 Привет! Я определил твой уровень как Beginner. Начнём с основ?
                             </div>
-                            <div class="chat-bubble bg-emerald-100 rounded-2xl rounded-tr-none p-3 max-w-[80%] ml-auto text-emerald-900" style="animation-delay: 0.6s">
-                                Hi! How do I say "Good morning" informally?
+                            <div class="bg-emerald-100 rounded-2xl rounded-tr-none p-3 max-w-[80%] ml-auto text-emerald-900">
+                                А если я уже знаю базовые слова?
                             </div>
-                            <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 1s">
-                                You can say "Morning!" or "Hey, good morning!" 😊
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]">
+                                🎯 Без проблем! Я подстрою программу под твой темп. Давай быстрый тест?
                             </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t flex items-center gap-2">
+                            <div class="flex-1 bg-gray-100 rounded-full h-10 flex items-center px-4 text-gray-400 text-sm">
+                                Хочу учиться, но...
+                            </div>
+                            <button class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -154,106 +155,148 @@
         </div>
     </section>
 
-    <!-- Subjects Selection -->
-    <section id="subjects" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 scroll-reveal">
-                <h2 class="text-4xl font-bold mb-2">Выбери предмет</h2>
-                <p class="text-gray-600">Пока мы запустили английский, но скоро добавим новые языки</p>
-            </div>
-            <div class="flex justify-center gap-4 scroll-reveal">
-                <button class="subject-btn active-subject px-8 py-4 rounded-full border-2 border-emerald-600 font-semibold text-lg transition-all" data-subject="english">
-                    🇬🇧 Английский
-                </button>
-                <button class="subject-btn px-8 py-4 rounded-full border-2 border-gray-200 font-semibold text-lg text-gray-400 cursor-not-allowed" disabled>
-                    🇪🇸 Испанский (скоро)
-                </button>
-                <button class="subject-btn px-8 py-4 rounded-full border-2 border-gray-200 font-semibold text-lg text-gray-400 cursor-not-allowed" disabled>
-                    🇫🇷 Французский (скоро)
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lessons Grid -->
-    <section id="lessons" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 scroll-reveal">
-                <h2 class="text-4xl font-bold mb-2">Уроки по английскому</h2>
-                <p class="text-gray-600">Выбери тему и начни заниматься с AI-учителем</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="lessonsContainer">
-                <!-- Уроки будут вставлены динамически через JS, но для примера сделаем статически -->
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works (сокращенно) -->
-    <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white">
+    <!-- Блок "Адаптивность" (для инвесторов) -->
+    <section id="adaptive" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Как проходят уроки</h2>
-                <p class="text-xl text-gray-600">Просто, интересно и эффективно</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Адаптивность — наша суперсила</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Мы не даём шаблонные курсы. Алгоритмы Deep Learning анализируют ваш прогресс, ошибки и даже психотип, чтобы каждый урок был максимально эффективным именно для вас.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center scroll-reveal">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">01</div>
-                    <h3 class="text-xl font-bold mb-2">Выбираешь тему</h3>
-                    <p class="text-gray-600">Из списка уроков выбираешь то, что хочешь изучить сегодня.</p>
+                <div class="bg-gray-50 rounded-3xl p-8 text-center scroll-reveal">
+                    <div class="text-5xl mb-4">🧠</div>
+                    <h3 class="text-2xl font-bold mb-2">AI-психотип</h3>
+                    <p class="text-gray-600">Определяем, как вы лучше воспринимаете информацию: визуал, аудиал, кинестетик или смешанный тип.</p>
                 </div>
-                <div class="text-center scroll-reveal" style="animation-delay: 0.1s">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">02</div>
-                    <h3 class="text-xl font-bold mb-2">Общаешься с AI</h3>
-                    <p class="text-gray-600">Panda AI объясняет, задаёт вопросы и помогает практиковаться.</p>
+                <div class="bg-gray-50 rounded-3xl p-8 text-center scroll-reveal" style="animation-delay: 0.1s">
+                    <div class="text-5xl mb-4">📊</div>
+                    <h3 class="text-2xl font-bold mb-2">Динамический уровень</h3>
+                    <p class="text-gray-600">Уровень сложности меняется в реальном времени. Если вы быстро отвечаете — уроки ускоряются, если ошибаетесь — добавляется практика.</p>
                 </div>
-                <div class="text-center scroll-reveal" style="animation-delay: 0.2s">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">03</div>
-                    <h3 class="text-xl font-bold mb-2">Закрепляешь результат</h3>
-                    <p class="text-gray-600">После урока получишь рекомендации, что повторить.</p>
+                <div class="bg-gray-50 rounded-3xl p-8 text-center scroll-reveal" style="animation-delay: 0.2s">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-2">Цели и интересы</h3>
+                    <p class="text-gray-600">Учите английский для IT, бизнеса или путешествий? AI подбирает лексику и диалоги под вашу сферу.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA без регистрации -->
+    <!-- Настройка обучения (адаптивный онбординг) -->
+    <section id="setup" class="py-24 bg-gradient-to-br from-emerald-50 to-teal-50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Настройте обучение под себя</h2>
+                <p class="text-xl text-gray-600">Это займёт всего минуту, но уроки станут в 10x эффективнее</p>
+            </div>
+            <div class="bg-white rounded-3xl shadow-xl p-8 scroll-reveal">
+                <!-- Выбор уровня -->
+                <div class="mb-8">
+                    <label class="block text-lg font-semibold mb-3">Ваш уровень английского</label>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="level-btn px-6 py-3 rounded-full border-2 border-gray-200 font-medium hover:border-emerald-500 transition" data-level="beginner">Начинающий (A0-A1)</button>
+                        <button class="level-btn px-6 py-3 rounded-full border-2 border-gray-200 font-medium hover:border-emerald-500 transition" data-level="intermediate">Средний (A2-B1)</button>
+                        <button class="level-btn px-6 py-3 rounded-full border-2 border-gray-200 font-medium hover:border-emerald-500 transition" data-level="advanced">Продвинутый (B2-C1)</button>
+                        <button class="level-btn px-6 py-3 rounded-full border-2 border-gray-200 font-medium hover:border-emerald-500 transition" data-level="expert">Эксперт (C2, как Дуров)</button>
+                    </div>
+                </div>
+                <!-- Стиль обучения -->
+                <div class="mb-8">
+                    <label class="block text-lg font-semibold mb-3">Как вам удобнее учиться?</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button class="style-btn px-4 py-3 rounded-xl border-2 border-gray-200 font-medium hover:border-emerald-500 transition flex flex-col items-center" data-style="visual">
+                            <span class="text-3xl mb-1">👁️</span>
+                            <span>Визуал</span>
+                        </button>
+                        <button class="style-btn px-4 py-3 rounded-xl border-2 border-gray-200 font-medium hover:border-emerald-500 transition flex flex-col items-center" data-style="auditory">
+                            <span class="text-3xl mb-1">👂</span>
+                            <span>Аудиал</span>
+                        </button>
+                        <button class="style-btn px-4 py-3 rounded-xl border-2 border-gray-200 font-medium hover:border-emerald-500 transition flex flex-col items-center" data-style="kinesthetic">
+                            <span class="text-3xl mb-1">🖐️</span>
+                            <span>Кинестетик</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Цель обучения -->
+                <div class="mb-8">
+                    <label class="block text-lg font-semibold mb-3">Ваша главная цель</label>
+                    <select id="goal" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500">
+                        <option value="travel">Путешествия</option>
+                        <option value="work">Работа / IT</option>
+                        <option value="study">Учёба</option>
+                        <option value="communication">Свободное общение</option>
+                    </select>
+                </div>
+                <button id="applySettings" class="w-full bg-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-emerald-700 transition">
+                    Показать мои уроки
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Персонализированные уроки (появятся после настройки) -->
+    <section id="lessons" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-2">Ваши персональные уроки</h2>
+                <p class="text-xl text-gray-600" id="personalizedNote">Выберите уровень и стиль, чтобы увидеть рекомендации</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="lessonsContainer">
+                <!-- Уроки будут вставлены динамически -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Как работает адаптивность (кратко) -->
+    <section id="how-it-works" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Как AI подстраивается под вас</h2>
+                <p class="text-xl text-gray-600">Технология, которая стоит за персонализацией</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 scroll-reveal">
+                    <div class="flex gap-4">
+                        <div class="step-number w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shrink-0">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Онбординг</h3>
+                            <p class="text-gray-600">Вы отвечаете на 5 вопросов — AI строит вашу начальную модель: уровень, психотип, интересы.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="step-number w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shrink-0">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Динамическая подборка</h3>
+                            <p class="text-gray-600">На основе ваших действий (правильные ответы, скорость, ошибки) алгоритм перестраивает программу.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="step-number w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shrink-0">3</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Обратная связь</h3>
+                            <p class="text-gray-600">После каждого урока вы получаете рекомендации, а AI корректирует план на завтра.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-lg scroll-reveal">
+                    <img src="https://placehold.co/600x400/10b981/white?text=Adaptive+Learning+Graph" alt="Адаптивный график" class="rounded-2xl w-full">
+                    <p class="text-sm text-gray-500 mt-2 text-center">*Пример адаптивной траектории обучения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA для инвесторов -->
     <section class="py-24 bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="text-6xl mb-6 panda-float">🐼</div>
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">Готов начать?</h2>
-            <p class="text-xl md:text-2xl text-emerald-100 mb-8">Выбери любой урок и занимайся прямо сейчас. Без регистрации.</p>
-            <a href="#subjects" class="bg-white text-emerald-700 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition transform hover:scale-105 shadow-2xl inline-block">
-                К урокам
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Масштабируемся в Алматы и дальше</h2>
+            <p class="text-xl md:text-2xl text-emerald-100 mb-8">Уникальная AI-платформа, готовая к выходу на рынок СНГ. От школьников до топ-менеджеров — каждый получит свой путь.</p>
+            <a href="#setup" class="bg-white text-emerald-700 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition transform hover:scale-105 shadow-2xl inline-block">
+                Попробовать демо
             </a>
-        </div>
-    </section>
-
-    <!-- FAQ (сокращенный) -->
-    <section id="faq" class="py-24 bg-white">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Частые вопросы</h2>
-                <p class="text-xl text-gray-600">Всё, что нужно знать перед стартом</p>
-            </div>
-            <div class="space-y-4">
-                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Это бесплатно?</span>
-                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="hidden px-6 pb-4 text-gray-600">
-                        Да, все уроки полностью бесплатны. Никаких подписок и скрытых платежей.
-                    </div>
-                </div>
-                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Нужна регистрация?</span>
-                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="hidden px-6 pb-4 text-gray-600">
-                        Нет, регистрация не требуется. Просто выбери урок и начинай.
-                    </div>
-                </div>
-            </div>
+            <p class="mt-6 text-emerald-200 text-sm">Уже 150+ уроков, адаптированных под 4 психотипа и 5 уровней</p>
         </div>
     </section>
 
@@ -265,67 +308,151 @@
                     <span>🐼</span>
                     <span>PandaTwins</span>
                 </div>
-                <p class="text-sm">© 2026 PandaTwins. Учись в удовольствие.</p>
+                <p class="text-sm">© 2026 PandaTwins. Алматы Хаб — Next Unicorn.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Модальное окно урока (упрощённое) -->
+    <div id="lessonModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="lessonContent" class="text-center">
+                <!-- Сюда будет подставляться контент урока -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Инициализация GSAP
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
-            gsap.to(elem, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
-                },
-                delay: elem.style.animationDelay ? parseFloat(elem.style.animationDelay) : 0
+        // --- База данных уроков (адаптивная) ---
+        const lessonsDB = {
+            beginner: {
+                visual: [
+                    { id: 1, title: 'Алфавит и звуки', duration: 10, description: 'Учим буквы с картинками и ассоциациями.' },
+                    { id: 2, title: 'Цвета и предметы', duration: 12, description: 'Визуальные карточки для запоминания.' },
+                    { id: 3, title: 'Базовые глаголы в картинках', duration: 15, description: 'Учим действия через изображения.' }
+                ],
+                auditory: [
+                    { id: 4, title: 'Приветствия на слух', duration: 8, description: 'Слушаем диалоги и повторяем.' },
+                    { id: 5, title: 'Произношение звуков', duration: 12, description: 'Аудио-тренажёр с обратной связью.' },
+                    { id: 6, title: 'Песни для начинающих', duration: 15, description: 'Учим слова через музыку.' }
+                ],
+                kinesthetic: [
+                    { id: 7, title: 'Пишем буквы', duration: 10, description: 'Интерактивные задания на написание.' },
+                    { id: 8, title: 'Собери предложение', duration: 15, description: 'Перетаскивай слова, составляй фразы.' },
+                    { id: 9, title: 'Ролевая игра "В магазине"', duration: 20, description: 'Практика через симуляцию.' }
+                ]
+            },
+            intermediate: {
+                visual: [
+                    { id: 10, title: 'Времена глаголов в инфографике', duration: 15, description: 'Наглядные схемы Present/Past/Future.' },
+                    { id: 11, title: 'Фразовые глаголы с картинками', duration: 12, description: 'Запоминаем устойчивые выражения.' }
+                ],
+                auditory: [
+                    { id: 12, title: 'Понимание на слух (подкасты)', duration: 20, description: 'Аудирование с вопросами.' },
+                    { id: 13, title: 'Диалоги для путешествий', duration: 15, description: 'Слушаем и повторяем.' }
+                ],
+                kinesthetic: [
+                    { id: 14, title: 'Грамматические тесты', duration: 10, description: 'Интерактивные задания с выбором.' },
+                    { id: 15, title: 'Напиши письмо другу', duration: 25, description: 'Практика письменной речи.' }
+                ]
+            },
+            advanced: {
+                visual: [
+                    { id: 16, title: 'Ментальные карты для лексики', duration: 15, description: 'Визуализация сложных тем.' },
+                    { id: 17, title: 'Анализ инфографики TED', duration: 20, description: 'Разбираем выступления.' }
+                ],
+                auditory: [
+                    { id: 18, title: 'Акцент и интонация', duration: 15, description: 'Тренируем произношение как у носителя.' },
+                    { id: 19, title: 'Интервью с экспертами', duration: 25, description: 'Слушаем и обсуждаем.' }
+                ],
+                kinesthetic: [
+                    { id: 20, title: 'Деловая переписка', duration: 20, description: 'Составляем email и ведём диалог.' },
+                    { id: 21, title: 'Ролевая игра "Переговоры"', duration: 30, description: 'Симуляция бизнес-встречи.' }
+                ]
+            },
+            expert: {
+                visual: [
+                    { id: 22, title: 'Стилистика и нюансы', duration: 20, description: 'Разбор тонкостей языка.' },
+                    { id: 23, title: 'Анализ литературы', duration: 25, description: 'Читаем и обсуждаем отрывки.' }
+                ],
+                auditory: [
+                    { id: 24, title: 'Диалекты английского', duration: 20, description: 'Слушаем разные акценты.' },
+                    { id: 25, title: 'Подкасты для профи', duration: 30, description: 'Обсуждение сложных тем.' }
+                ],
+                kinesthetic: [
+                    { id: 26, title: 'Написание эссе', duration: 40, description: 'Практика академического письма.' },
+                    { id: 27, title: 'Дебаты с AI', duration: 35, description: 'Аргументированная дискуссия.' }
+                ]
+            }
+        };
+
+        // Текущие выбранные параметры
+        let currentLevel = 'beginner';
+        let currentStyle = 'visual';
+        let currentGoal = 'travel';
+
+        // Элементы
+        const levelBtns = document.querySelectorAll('.level-btn');
+        const styleBtns = document.querySelectorAll('.style-btn');
+        const goalSelect = document.getElementById('goal');
+        const applyBtn = document.getElementById('applySettings');
+        const lessonsContainer = document.getElementById('lessonsContainer');
+        const personalizedNote = document.getElementById('personalizedNote');
+
+        // Активные классы для кнопок уровня
+        levelBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                levelBtns.forEach(b => b.classList.remove('active-level', 'border-emerald-600', 'bg-emerald-600', 'text-white'));
+                this.classList.add('active-level', 'border-emerald-600', 'bg-emerald-600', 'text-white');
+                currentLevel = this.dataset.level;
             });
         });
 
-        // Функция для аккордеона FAQ
-        function toggleFaq(btn) {
-            const content = btn.nextElementSibling;
-            const arrow = btn.querySelector('svg');
-            content.classList.toggle('hidden');
-            arrow.classList.toggle('rotate-180');
-        }
+        // Активные классы для стиля
+        styleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                styleBtns.forEach(b => b.classList.remove('active-style', 'border-emerald-600', 'bg-emerald-600', 'text-white'));
+                this.classList.add('active-style', 'border-emerald-600', 'bg-emerald-600', 'text-white');
+                currentStyle = this.dataset.style;
+            });
+        });
 
-        // Данные уроков (английский)
-        const lessons = [
-            { id: 1, title: 'Greetings and Introductions', level: 'Начинающий', duration: 10, description: 'Научись приветствовать и представляться на английском.' },
-            { id: 2, title: 'Present Simple: Daily Routine', level: 'Начинающий', duration: 15, description: 'Изучи простое настоящее время на примере рутины.' },
-            { id: 3, title: 'Ordering Food in a Restaurant', level: 'Средний', duration: 12, description: 'Фразы и диалоги для заказа еды за границей.' },
-            { id: 4, title: 'Business English: Small Talk', level: 'Продвинутый', duration: 20, description: 'Как поддержать светскую беседу с коллегами.' },
-            { id: 5, title: 'Past Simple: Talking about Weekend', level: 'Средний', duration: 12, description: 'Расскажи о выходных, используя прошедшее время.' },
-            { id: 6, title: 'Phone Call Etiquette', level: 'Продвинутый', duration: 18, description: 'Правила и фразы для деловых звонков.' },
-        ];
+        // Цель
+        goalSelect.addEventListener('change', (e) => {
+            currentGoal = e.target.value;
+        });
 
-        // Рендер уроков
-        const container = document.getElementById('lessonsContainer');
+        // Функция рендера уроков
         function renderLessons() {
-            container.innerHTML = '';
-            lessons.forEach(lesson => {
+            const levelLessons = lessonsDB[currentLevel]?.[currentStyle] || [];
+            if (levelLessons.length === 0) {
+                lessonsContainer.innerHTML = '<p class="col-span-3 text-center text-gray-500">Нет уроков для выбранной комбинации. Попробуйте другой стиль или уровень.</p>';
+                personalizedNote.innerText = `Уроки для уровня: ${currentLevel}, стиль: ${currentStyle}, цель: ${currentGoal}`;
+                return;
+            }
+
+            lessonsContainer.innerHTML = '';
+            levelLessons.forEach(lesson => {
                 const card = document.createElement('div');
                 card.className = 'lesson-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md scroll-reveal';
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full">${lesson.level}</span>
+                        <span class="text-xs font-semibold px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full">${currentLevel}</span>
                         <span class="text-xs text-gray-400">${lesson.duration} мин</span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">${lesson.title}</h3>
                     <p class="text-gray-600 text-sm mb-4">${lesson.description}</p>
-                    <button onclick="startLesson('${lesson.title}')" class="w-full bg-emerald-50 text-emerald-700 py-2 rounded-full font-semibold hover:bg-emerald-100 transition">Начать урок</button>
+                    <button onclick="openLesson('${lesson.title.replace(/'/g, "\\'")}', '${lesson.description.replace(/'/g, "\\'")}')" class="w-full bg-emerald-50 text-emerald-700 py-2 rounded-full font-semibold hover:bg-emerald-100 transition">Начать урок</button>
                 `;
-                container.appendChild(card);
+                lessonsContainer.appendChild(card);
             });
 
-            // Обновляем scroll reveal для новых элементов
+            personalizedNote.innerText = `Ваши уроки (уровень: ${currentLevel}, стиль: ${currentStyle}, цель: ${currentGoal})`;
+
+            // Обновляем анимации
             gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
                 gsap.to(elem, {
                     opacity: 1,
@@ -342,27 +469,66 @@
             });
         }
 
-        // Запуск урока (имитация)
-        window.startLesson = function(lessonTitle) {
-            alert(`Урок "${lessonTitle}" запущен! В настоящей версии здесь откроется чат с AI-учителем.`);
+        // Открыть модалку урока
+        window.openLesson = function(title, description) {
+            const modal = document.getElementById('lessonModal');
+            const content = document.getElementById('lessonContent');
+            content.innerHTML = `
+                <h3 class="text-3xl font-bold mb-4">${title}</h3>
+                <p class="text-gray-600 mb-6">${description}</p>
+                <div class="bg-emerald-50 p-6 rounded-2xl mb-6">
+                    <p class="text-left mb-2"><strong>Panda AI:</strong> Отлично! Давай начнём. Я буду задавать вопросы и объяснять материал. Готов?</p>
+                    <div class="flex gap-2 mt-4">
+                        <button class="bg-emerald-600 text-white px-6 py-2 rounded-full">Да</button>
+                        <button class="bg-gray-200 px-6 py-2 rounded-full">Нет</button>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400">Это демо-версия урока. В реальном приложении здесь будет полноценный диалог с AI.</p>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         };
 
-        // При загрузке страницы рендерим уроки
-        document.addEventListener('DOMContentLoaded', renderLessons);
+        window.closeLessonModal = function() {
+            const modal = document.getElementById('lessonModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        };
 
-        // Переключение предметов (пока только английский активен)
-        document.querySelectorAll('.subject-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (this.disabled) return;
-                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active-subject'));
-                this.classList.add('active-subject');
-                // Здесь можно было бы загружать уроки для выбранного предмета, но пока только английский
+        // Применить настройки
+        applyBtn.addEventListener('click', () => {
+            renderLessons();
+            document.getElementById('lessons').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Инициализация: выбрать первый уровень и стиль по умолчанию
+        document.querySelector('.level-btn[data-level="beginner"]').click();
+        document.querySelector('.style-btn[data-style="visual"]').click();
+
+        // Начальный рендер (пустой)
+        personalizedNote.innerText = 'Выберите уровень и стиль выше, чтобы увидеть рекомендации';
+
+        // Закрытие модалки по клику на фон
+        document.getElementById('lessonModal').addEventListener('click', function(e) {
+            if (e.target === this) closeLessonModal();
+        });
+
+        // GSAP для изначальных элементов
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
+            gsap.to(elem, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: elem,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: elem.style.animationDelay ? parseFloat(elem.style.animationDelay) : 0
             });
         });
     </script>
-</body>
-</html>
-document.addEventListener('DOMContentLoaded',()=>{obInit()});
-</script>
 </body>
 </html>
