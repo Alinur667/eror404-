@@ -1,886 +1,621 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PandaTwins — Учись умнее. Расти быстрее.</title>
-<meta name="description" content="PandaTwins — персональный AI-учитель, план под твой психотип и живая панда-компаньон. Только проверенный контент. Бесплатно.">
-<meta property="og:title" content="PandaTwins — Учись умнее. Расти быстрее.">
-<meta property="og:description" content="Персональный AI-учитель под твой психотип. Только проверенный контент.">
-<meta property="og:image" content="https://last-bfmg.vercel.app/og-image.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black: #0e0e0e;
-    --white: #fafaf7;
-    --cream: #f5f0e8;
-    --green: #2d6a4f;
-    --green-light: #52b788;
-    --green-pale: #d8f3dc;
-    --yellow: #f9c74f;
-    --red: #e63946;
-    --gray: #6b7280;
-    --border: #e5e7eb;
-    --shadow: 0 4px 24px rgba(0,0,0,0.08);
-    --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--white);
-    color: var(--black);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(250,250,247,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1.5px solid var(--border);
-    padding: 0 24px;
-    height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo { font-weight: 900; font-size: 1.2rem; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--black); }
-  .nav-cta {
-    background: var(--green); color: #fff;
-    border: none; border-radius: 50px; padding: 8px 20px;
-    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.85rem;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
-    text-decoration: none;
-  }
-  .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    background: var(--cream);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center;
-    padding: 100px 24px 60px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, #d8f3dc 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--green-pale); color: var(--green);
-    border: 1.5px solid #b7e4c7; border-radius: 50px;
-    padding: 5px 14px; font-size: 0.8rem; font-weight: 700;
-    margin-bottom: 24px; letter-spacing: 0.3px;
-  }
-  .hero h1 {
-    font-size: clamp(2.4rem, 7vw, 4.2rem);
-    font-weight: 900; line-height: 1.1;
-    letter-spacing: -1.5px;
-    max-width: 720px;
-    margin-bottom: 20px;
-  }
-  .hero h1 span { color: var(--green); }
-  .hero p {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    color: #444; max-width: 520px;
-    margin-bottom: 36px; font-weight: 600;
-  }
-  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 56px; }
-  .btn-primary {
-    background: var(--green); color: #fff;
-    border: none; border-radius: 50px; padding: 14px 32px;
-    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
-    cursor: pointer; transition: all 0.2s;
-    box-shadow: 0 4px 18px rgba(45,106,79,0.3);
-  }
-  .btn-primary:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,0.35); }
-  .btn-secondary {
-    background: transparent; color: var(--black);
-    border: 2px solid var(--border); border-radius: 50px; padding: 12px 28px;
-    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--green); color: var(--green); }
-
-  /* stats row */
-  .hero-stats {
-    display: flex; gap: 0; flex-wrap: wrap; justify-content: center;
-    background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius); overflow: hidden;
-    box-shadow: var(--shadow);
-    max-width: 640px; width: 100%;
-  }
-  .hero-stat {
-    flex: 1; min-width: 120px; padding: 18px 16px;
-    text-align: center; border-right: 1.5px solid var(--border);
-  }
-  .hero-stat:last-child { border-right: none; }
-  .hero-stat-val { font-size: 1.6rem; font-weight: 900; color: var(--green); letter-spacing: -1px; }
-  .hero-stat-lbl { font-size: 0.72rem; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-
-  /* ── SOCIAL PROOF ── */
-  .social-proof {
-    background: var(--black); color: #fff;
-    padding: 60px 24px;
-    text-align: center;
-  }
-  .social-proof h2 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; margin-bottom: 40px; }
-  .reviews-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px; max-width: 900px; margin: 0 auto;
-  }
-  .review-card {
-    background: #1a1a1a; border: 1px solid #2d2d2d;
-    border-radius: var(--radius); padding: 24px;
-    text-align: left;
-  }
-  .review-stars { color: var(--yellow); font-size: 0.9rem; margin-bottom: 10px; }
-  .review-text { font-size: 0.95rem; color: #d1d5db; line-height: 1.6; margin-bottom: 14px; font-weight: 600; }
-  .review-author { font-size: 0.8rem; color: #6b7280; font-weight: 700; }
-  .review-author span { color: var(--green-light); }
-
-  /* ── WHY ── */
-  .why {
-    padding: 80px 24px;
-    max-width: 1000px; margin: 0 auto;
-  }
-  .section-tag {
-    display: inline-block; background: var(--green-pale);
-    color: var(--green); border-radius: 50px; padding: 4px 14px;
-    font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.5px; margin-bottom: 14px;
-  }
-  .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
-  .section-sub { color: var(--gray); font-size: 1.05rem; font-weight: 600; margin-bottom: 48px; }
-  .features-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-  }
-  .feature-card {
-    background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius); padding: 28px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-  .feature-icon { font-size: 1.8rem; margin-bottom: 12px; }
-  .feature-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
-  .feature-card p { font-size: 0.92rem; color: var(--gray); font-weight: 600; line-height: 1.55; }
-  .feature-card .feature-source {
-    display: inline-flex; align-items: center; gap: 4px;
-    margin-top: 12px; font-size: 0.75rem; color: var(--green);
-    background: var(--green-pale); border-radius: 50px; padding: 3px 10px; font-weight: 700;
-  }
-
-  /* ── HOW ── */
-  .how {
-    background: var(--cream); padding: 80px 24px;
-  }
-  .how-inner { max-width: 800px; margin: 0 auto; }
-  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 48px; position: relative; }
-  .steps::before {
-    content: ''; position: absolute;
-    left: 27px; top: 40px; bottom: 40px; width: 2px;
-    background: linear-gradient(to bottom, var(--green-light), var(--green-pale));
-  }
-  .step {
-    display: flex; gap: 24px; align-items: flex-start;
-    padding: 24px 0;
-  }
-  .step-num {
-    width: 56px; height: 56px; flex-shrink: 0;
-    background: var(--green); color: #fff;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1rem;
-    border: 3px solid var(--cream); position: relative; z-index: 1;
-  }
-  .step-body h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
-  .step-body p { font-size: 0.93rem; color: var(--gray); font-weight: 600; }
-  .step-body .step-time {
-    display: inline-block; margin-top: 8px;
-    background: #fff; border: 1.5px solid var(--border);
-    border-radius: 50px; padding: 3px 12px;
-    font-size: 0.75rem; font-weight: 700; color: var(--green);
-  }
-
-  /* ── SUBJECTS ── */
-  .subjects { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
-  .subject-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px; margin-top: 40px;
-  }
-  .subject-card {
-    background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); padding: 20px 16px;
-    text-align: center; transition: all 0.2s; cursor: pointer;
-  }
-  .subject-card:hover { border-color: var(--green); background: var(--green-pale); }
-  .subject-card .subject-icon { font-size: 1.8rem; margin-bottom: 8px; }
-  .subject-card .subject-name { font-size: 0.88rem; font-weight: 800; }
-  .subject-card .subject-level { font-size: 0.72rem; color: var(--gray); font-weight: 600; margin-top: 2px; }
-  .subject-coming {
-    opacity: 0.5;
-    border-style: dashed;
-  }
-  .subject-coming:hover { border-color: var(--border); background: #fff; }
-
-  /* ── ONBOARDING PREVIEW ── */
-  .preview-section { background: var(--black); padding: 80px 24px; }
-  .preview-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .preview-text h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 16px; }
-  .preview-text p { color: #9ca3af; font-size: 1rem; font-weight: 600; margin-bottom: 28px; }
-  .preview-mockup {
-    background: #1a1a1a; border: 1px solid #2d2d2d;
-    border-radius: var(--radius); overflow: hidden;
-  }
-  .mockup-header {
-    background: var(--green); padding: 14px 20px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .mockup-panda { font-size: 1.3rem; }
-  .mockup-title { color: #fff; font-weight: 800; font-size: 0.95rem; }
-  .mockup-body { padding: 20px; }
-  .mockup-msg {
-    background: #2d2d2d; border-radius: 12px 12px 12px 4px;
-    padding: 12px 16px; font-size: 0.9rem; color: #e5e7eb; font-weight: 600;
-    margin-bottom: 12px; line-height: 1.5;
-  }
-  .mockup-progress {
-    margin-top: 16px;
-  }
-  .mockup-progress-label { font-size: 0.75rem; color: #6b7280; font-weight: 700; margin-bottom: 6px; }
-  .progress-bar { height: 6px; background: #2d2d2d; border-radius: 10px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--green-light); border-radius: 10px; width: 33%; transition: width 1s; }
-  .mockup-q { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-  .mockup-option {
-    background: #242424; border: 1.5px solid #3d3d3d;
-    border-radius: var(--radius-sm); padding: 10px 14px;
-    font-size: 0.85rem; color: #d1d5db; font-weight: 600; cursor: pointer;
-    transition: all 0.15s;
-  }
-  .mockup-option:hover, .mockup-option.active { border-color: var(--green-light); color: var(--green-light); }
-
-  /* ── FAQ ── */
-  .faq { padding: 80px 24px; max-width: 700px; margin: 0 auto; }
-  .faq-item { border-bottom: 1.5px solid var(--border); }
-  .faq-q {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 0; cursor: pointer; font-weight: 800; font-size: 1rem;
-    gap: 12px;
-  }
-  .faq-q:hover { color: var(--green); }
-  .faq-icon { font-size: 1.2rem; color: var(--green); flex-shrink: 0; transition: transform 0.2s; }
-  .faq-a { font-size: 0.95rem; color: var(--gray); font-weight: 600; padding-bottom: 18px; display: none; line-height: 1.7; }
-  .faq-item.open .faq-a { display: block; }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-
-  /* ── CTA BOTTOM ── */
-  .cta-bottom {
-    background: var(--green); padding: 80px 24px;
-    text-align: center;
-  }
-  .cta-bottom h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 12px; }
-  .cta-bottom p { color: rgba(255,255,255,0.8); font-size: 1.05rem; font-weight: 600; margin-bottom: 32px; }
-  .cta-bottom .btn-white {
-    background: #fff; color: var(--green);
-    border: none; border-radius: 50px; padding: 16px 40px;
-    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.05rem;
-    cursor: pointer; transition: all 0.2s; display: inline-block;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  }
-  .cta-bottom .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-  .cta-note { color: rgba(255,255,255,0.65); font-size: 0.83rem; font-weight: 700; margin-top: 14px; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--black); color: #6b7280;
-    padding: 40px 24px; text-align: center;
-    font-size: 0.85rem; font-weight: 600;
-  }
-  footer a { color: var(--green-light); text-decoration: none; }
-
-  /* ── ONBOARDING MODAL ── */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
-    z-index: 999; align-items: center; justify-content: center;
-    padding: 24px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: #fff; border-radius: 24px;
-    width: 100%; max-width: 480px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
-    overflow: hidden;
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-  .modal-header {
-    background: var(--green); padding: 20px 24px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .modal-panda { font-size: 1.8rem; }
-  .modal-header-text h3 { color: #fff; font-weight: 900; font-size: 1rem; }
-  .modal-header-text p { color: rgba(255,255,255,0.8); font-size: 0.82rem; font-weight: 600; }
-  .modal-progress-wrap { padding: 0 24px; background: #f9fafb; }
-  .modal-progress-bar-outer { height: 4px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
-  .modal-progress-bar { height: 100%; background: var(--green-light); transition: width 0.4s; }
-  .modal-progress-label { font-size: 0.72rem; color: var(--gray); font-weight: 700; padding: 8px 0 6px; }
-  .modal-body { padding: 28px 24px; }
-  .modal-question { font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; line-height: 1.4; }
-  .modal-options { display: flex; flex-direction: column; gap: 10px; }
-  .modal-opt {
-    border: 2px solid var(--border); border-radius: var(--radius-sm);
-    padding: 13px 16px; font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem; font-weight: 700; cursor: pointer;
-    background: #fff; text-align: left; transition: all 0.15s;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .modal-opt:hover { border-color: var(--green-light); background: var(--green-pale); }
-  .modal-opt.selected { border-color: var(--green); background: var(--green-pale); color: var(--green); }
-  .modal-opt-icon { font-size: 1.1rem; }
-  .modal-input {
-    width: 100%; border: 2px solid var(--border); border-radius: var(--radius-sm);
-    padding: 13px 16px; font-family: 'Nunito', sans-serif;
-    font-size: 1rem; font-weight: 700; outline: none;
-    transition: border-color 0.15s;
-  }
-  .modal-input:focus { border-color: var(--green); }
-  .modal-footer {
-    padding: 16px 24px 24px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .btn-modal-back {
-    background: none; border: none; color: var(--gray);
-    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.9rem;
-    cursor: pointer; padding: 0;
-  }
-  .btn-modal-back:hover { color: var(--black); }
-  .btn-modal-next {
-    background: var(--green); color: #fff;
-    border: none; border-radius: 50px; padding: 12px 28px;
-    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .btn-modal-next:hover { background: var(--green-light); }
-  .btn-modal-next:disabled { background: #d1d5db; cursor: not-allowed; }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: rgba(255,255,255,0.2); border: none;
-    border-radius: 50%; width: 32px; height: 32px;
-    color: #fff; font-size: 1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  /* Result screen */
-  .modal-result { padding: 32px 24px; text-align: center; }
-  .result-panda { font-size: 4rem; margin-bottom: 16px; }
-  .result-title { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
-  .result-sub { font-size: 0.95rem; color: var(--gray); font-weight: 600; margin-bottom: 28px; }
-  .result-plan {
-    background: var(--cream); border-radius: var(--radius);
-    padding: 20px; text-align: left; margin-bottom: 24px;
-  }
-  .result-plan h4 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); margin-bottom: 12px; }
-  .result-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
-  .result-row:last-child { border: none; }
-  .result-row-label { font-weight: 700; color: var(--gray); }
-  .result-row-val { font-weight: 800; color: var(--black); }
-  .result-row-val.green { color: var(--green); }
-
-  /* ── DASHBOARD preview (after onboarding) ── */
-  .dashboard-section { display: none; } /* shown via JS in real app */
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .preview-inner { grid-template-columns: 1fr; }
-    .hero-stat { padding: 14px 10px; }
-    .hero-stat-val { font-size: 1.3rem; }
-    .steps::before { display: none; }
-    nav .nav-cta { padding: 7px 14px; font-size: 0.78rem; }
-  }
-
-  /* ── ANIMATIONS ── */
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PandaTwins — AI-платформа обучения с персональным AI-учителем, планом под ваш психотип и живой пандой-компаньоном. Только проверенный контент.">
+    <meta property="og:title" content="PandaTwins — Учись умнее. Расти быстрее.">
+    <meta property="og:description" content="Персональный AI-учитель, план под твой психотип и живая панда-компаньон. Только проверенный контент.">
+    <meta property="og:image" content="https://last-bfmg.vercel.app/og-image.png">
+    <meta property="og:type" content="website">
+    <title>PandaTwins — Учись умнее. Расти быстрее.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .panda-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        .chat-bubble {
+            animation: popIn 0.5s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .step-number {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+        .cta-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">🐼 PandaTwins</a>
-  <button class="nav-cta" onclick="openModal()">Начать бесплатно →</button>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">🌱 Бета — бесплатно для первых 500</div>
-  <h1>Учись умнее.<br><span>Расти быстрее.</span></h1>
-  <p>Персональный AI-учитель под твой психотип. Только проверенный контент — никакого фейка.</p>
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="openModal()">Попробовать бесплатно 🐼</button>
-    <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Как это работает?</button>
-  </div>
-  <div class="hero-stats fade-in">
-    <div class="hero-stat"><div class="hero-stat-val">100%</div><div class="hero-stat-lbl">Проверенный контент</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">5 мин</div><div class="hero-stat-lbl">Минимум в день</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">8</div><div class="hero-stat-lbl">Форматов урока</div></div>
-    <div class="hero-stat"><div class="hero-stat-val">∞</div><div class="hero-stat-lbl">Предметов</div></div>
-  </div>
-</section>
-
-<!-- SOCIAL PROOF -->
-<section class="social-proof">
-  <h2>Что говорят первые пользователи</h2>
-  <div class="reviews-grid">
-    <div class="review-card fade-in">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">«Наконец-то платформа, которая не обещает "английский за 7 дней". Реальный прогноз, реальный план — за 3 недели я уже уверенно читаю новости.»</p>
-      <div class="review-author">Алина, 22 — <span>Английский B1</span></div>
-    </div>
-    <div class="review-card fade-in">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">«Панда не даёт бросить 😄 Каждый день напоминает, хвалит и адаптирует уроки. За месяц — первый раз в жизни дошёл до конца курса.»</p>
-      <div class="review-author">Максим, 17 — <span>Математика</span></div>
-    </div>
-    <div class="review-card fade-in">
-      <div class="review-stars">★★★★☆</div>
-      <p class="review-text">«Понравилось, что каждый факт с источником. Как человек, который устал от AI-галлюцинаций, это важно. Жду больше предметов!»</p>
-      <div class="review-author">Дмитрий, 29 — <span>История</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY -->
-<section class="why">
-  <div class="section-tag">Почему PandaTwins</div>
-  <h2 class="section-title">Образование,<br>которое работает</h2>
-  <p class="section-sub">Без шаблонных курсов. Только твой путь.</p>
-  <div class="features-grid">
-    <div class="feature-card fade-in">
-      <div class="feature-icon">🧠</div>
-      <h3>AI-психолог на старте</h3>
-      <p>Panda AI задаёт умные вопросы и строит план под твой психотип — не шаблонный курс, а твой личный путь.</p>
-    </div>
-    <div class="feature-card fade-in">
-      <div class="feature-icon">✅</div>
-      <h3>Только правда</h3>
-      <p>Каждый факт привязан к проверенному источнику. AI честно скажет если не знает — никаких выдуманных ответов.</p>
-      <span class="feature-source">📚 Пример: Britannica, Wikipedia, учебники РАО</span>
-    </div>
-    <div class="feature-card fade-in">
-      <div class="feature-icon">🎯</div>
-      <h3>Под твой психотип</h3>
-      <p>Эмпат, интроверт, визуал, практик — уроки адаптированы под то, как именно ты воспринимаешь мир.</p>
-    </div>
-    <div class="feature-card fade-in">
-      <div class="feature-icon">📈</div>
-      <h3>Честный прогноз</h3>
-      <p>Не «выучи язык за 7 дней» — реальный прогноз на основе твоего темпа и цели. Обновляется каждую неделю.</p>
-    </div>
-    <div class="feature-card fade-in">
-      <div class="feature-icon">⚡</div>
-      <h3>5–15 минут в день</h3>
-      <p>Короткие уроки под твой ритм. Панда напомнит, поддержит и не даст бросить на полпути.</p>
-    </div>
-    <div class="feature-card fade-in">
-      <div class="feature-icon">🔒</div>
-      <h3>Только законное</h3>
-      <p>Мы учим тому, что реально полезно и этично. Никаких серых зон — только знания, которыми можно гордиться.</p>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="how-inner">
-    <div class="section-tag">Как это работает</div>
-    <h2 class="section-title">4 шага до результата</h2>
-    <div class="steps">
-      <div class="step fade-in">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Panda AI тебя изучает</h3>
-          <p>Диалог из 6 вопросов — цель, стиль обучения, психотип, доступное время. Без скуки.</p>
-          <span class="step-time">⏱ 2 минуты</span>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🐼</span>
+                    <span class="font-bold text-xl">PandaTwins</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-emerald-600 transition">Возможности</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-emerald-600 transition">Как работает</a>
+                    <a href="#demo" class="text-gray-600 hover:text-emerald-600 transition">Демо</a>
+                    <a href="#faq" class="text-gray-600 hover:text-emerald-600 transition">FAQ</a>
+                </div>
+                <button onclick="openModal()" class="bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-emerald-700 transition cta-pulse">
+                    Начать бесплатно
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>Получаешь персональный план</h3>
-          <p>AI строит roadmap под тебя с реальным прогнозом. Математика — математика. Английский — английский.</p>
-          <span class="step-time">⏱ Мгновенно</span>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+        <div class="blob bg-emerald-300 w-96 h-96 top-20 -left-20"></div>
+        <div class="blob bg-teal-300 w-80 h-80 bottom-20 right-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <div class="inline-flex items-center bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                        <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                        Бета-версия уже доступна
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                        Учись умнее.<br>
+                        <span class="gradient-text">Расти быстрее.</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Персональный AI-учитель, план под твой психотип и живая панда-компаньон. 
+                        <span class="font-semibold text-emerald-600">Только проверенный контент</span> — никакого фейка.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openModal()" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105 cta-pulse flex items-center justify-center gap-2">
+                            Начать бесплатно
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </button>
+                        <button onclick="scrollToDemo()" class="bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-full font-bold text-lg hover:border-emerald-500 hover:text-emerald-600 transition flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Смотреть демо
+                        </button>
+                    </div>
+                    <div class="mt-8 flex items-center gap-6 text-sm text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            Без карты
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            2 минуты настройки
+                        </div>
+                    </div>
+                </div>
+                <div class="relative scroll-reveal">
+                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl transform rotate-3 opacity-20"></div>
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-6 border border-gray-100">
+                        <!-- Mock Interface -->
+                        <div class="flex items-center gap-3 mb-4 pb-4 border-b">
+                            <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-2xl">🐼</div>
+                            <div>
+                                <div class="font-semibold">Panda AI</div>
+                                <div class="text-xs text-gray-500">Онлайн</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 0.2s">
+                                Привет! Я твой AI-учитель 🎋 Давай настроим твой план обучения?
+                            </div>
+                            <div class="chat-bubble bg-emerald-100 rounded-2xl rounded-tr-none p-3 max-w-[80%] ml-auto text-emerald-900" style="animation-delay: 0.6s">
+                                Да! Хочу выучить английский для работы
+                            </div>
+                            <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 1s">
+                                Отлично! Какой у тебя уровень сейчас?
+                            </div>
+                            <div class="flex gap-2 mt-4" style="animation-delay: 1.4s">
+                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Начальный</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">Средний</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">Продвинутый</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t flex items-center gap-2">
+                            <div class="flex-1 bg-gray-100 rounded-full h-10 flex items-center px-4 text-gray-400 text-sm">
+                                Напиши сообщение...
+                            </div>
+                            <button class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Floating elements -->
+                    <div class="absolute -top-4 -right-4 bg-white rounded-2xl shadow-lg p-3 panda-float">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">🔥</span>
+                            <div>
+                                <div class="text-xs text-gray-500">Стрик</div>
+                                <div class="font-bold text-emerald-600">12 дней</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-lg p-3 panda-float" style="animation-delay: 0.5s">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">⭐</span>
+                            <div>
+                                <div class="text-xs text-gray-500">XP сегодня</div>
+                                <div class="font-bold text-purple-600">+450</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>Учишься в своём формате</h3>
-          <p>Карточки, квизы, AI-диалог — формат подобран под твой психотип. Контент всегда с источником.</p>
-          <span class="step-time">⏱ 5–15 мин/день</span>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="py-12 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="scroll-reveal">
+                    <div class="text-3xl font-bold text-emerald-600">∞</div>
+                    <div class="text-sm text-gray-600 mt-1">Предметов</div>
+                </div>
+                <div class="scroll-reveal">
+                    <div class="text-3xl font-bold text-emerald-600">100%</div>
+                    <div class="text-sm text-gray-600 mt-1">Проверенные источники</div>
+                </div>
+                <div class="scroll-reveal">
+                    <div class="text-3xl font-bold text-emerald-600">15 мин</div>
+                    <div class="text-sm text-gray-600 mt-1">В день</div>
+                </div>
+                <div class="scroll-reveal">
+                    <div class="text-3xl font-bold text-emerald-600">0₽</div>
+                    <div class="text-sm text-gray-600 mt-1">Для старта</div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>Видишь рост каждый день</h3>
-          <p>Стрик, XP, обновляемый прогноз. Панда отмечает каждый успех и помогает не сбиться.</p>
-          <span class="step-time">📊 Еженедельные отчёты</span>
+    </section>
+
+    <!-- AI Chat Feature Highlight -->
+    <section id="demo" class="py-24 bg-gradient-to-br from-emerald-50 to-teal-50 relative overflow-hidden">
+        <div class="blob bg-emerald-200 w-64 h-64 top-0 right-0 opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Главная фича</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4">AI-чат с учителем 24/7</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Задавай любые вопросы, получай объяснения, практикуй разговорный язык. Твой личный репетитор всегда на связи.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-4">💬</div>
+                    <h3 class="text-xl font-bold mb-2">Естественный диалог</h3>
+                    <p class="text-gray-600">Разговаривай как с человеком. AI понимает контекст и адаптируется под твой уровень.</p>
+                </div>
+                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300" style="animation-delay: 0.1s">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4">📚</div>
+                    <h3 class="text-xl font-bold mb-2">Проверка фактов</h3>
+                    <p class="text-gray-600">Каждый факт привязан к источнику: Wikipedia, научным статьям, учебникам. Никаких галлюцинаций.</p>
+                </div>
+                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300" style="animation-delay: 0.2s">
+                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Персонализация</h3>
+                    <p class="text-gray-600">Помнит твои ошибки, знает твои цели, подстраивается под твой темп обучения.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- SUBJECTS -->
-<section class="subjects">
-  <div class="section-tag">Предметы</div>
-  <h2 class="section-title">Что можно учить</h2>
-  <p class="section-sub">Сейчас доступно — скоро больше</p>
-  <div class="subject-grid">
-    <div class="subject-card fade-in" onclick="openModal()">
-      <div class="subject-icon">🇬🇧</div>
-      <div class="subject-name">Английский</div>
-      <div class="subject-level">A1 → C1</div>
-    </div>
-    <div class="subject-card fade-in" onclick="openModal()">
-      <div class="subject-icon">➗</div>
-      <div class="subject-name">Математика</div>
-      <div class="subject-level">Школа + ЕГЭ</div>
-    </div>
-    <div class="subject-card fade-in" onclick="openModal()">
-      <div class="subject-icon">📜</div>
-      <div class="subject-name">История</div>
-      <div class="subject-level">Россия + Мир</div>
-    </div>
-    <div class="subject-card fade-in subject-coming">
-      <div class="subject-icon">💻</div>
-      <div class="subject-name">Python</div>
-      <div class="subject-level">Скоро</div>
-    </div>
-    <div class="subject-card fade-in subject-coming">
-      <div class="subject-icon">🧬</div>
-      <div class="subject-name">Биология</div>
-      <div class="subject-level">Скоро</div>
-    </div>
-    <div class="subject-card fade-in subject-coming">
-      <div class="subject-icon">🇩🇪</div>
-      <div class="subject-name">Немецкий</div>
-      <div class="subject-level">Скоро</div>
-    </div>
-  </div>
-</section>
-
-<!-- PREVIEW (mockup) -->
-<section class="preview-section">
-  <div class="preview-inner">
-    <div class="preview-text">
-      <div class="section-tag" style="background:#1a3a2a; color: var(--green-light);">Онбординг</div>
-      <h2>2 минуты — и план готов</h2>
-      <p>Panda AI задаёт 6 умных вопросов и строит персональный roadmap прямо при тебе.</p>
-      <button class="btn-primary" onclick="openModal()">Попробовать сейчас →</button>
-    </div>
-    <div class="preview-mockup fade-in">
-      <div class="mockup-header">
-        <span class="mockup-panda">🐼</span>
-        <span class="mockup-title">Panda AI · Вопрос 2 из 6</span>
-      </div>
-      <div class="mockup-body">
-        <div class="mockup-progress">
-          <div class="mockup-progress-label">Прогресс настройки</div>
-          <div class="progress-bar"><div class="progress-fill" id="mockupBar"></div></div>
+    <!-- Features Grid -->
+    <section id="features" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Образование, которое работает</h2>
+                <p class="text-xl text-gray-600">Никаких шаблонных курсов — только персональный подход</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">AI-психолог на старте</h3>
+                    <p class="text-gray-600">Panda AI задаёт умные вопросы и строит план под твой психотип — не шаблонный курс, а твой личный путь.</p>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">✅</div>
+                    <h3 class="text-xl font-bold mb-2">Только правда</h3>
+                    <p class="text-gray-600">Каждый факт привязан к проверенному источнику. AI честно скажет если не знает — никаких выдуманных ответов.</p>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Под твой психотип</h3>
+                    <p class="text-gray-600">Эмпат, интроверт, визуал, практик — уроки адаптированы под то, как именно ты воспринимаешь мир.</p>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h3 class="text-xl font-bold mb-2">Честный прогноз</h3>
+                    <p class="text-gray-600">Не «выучи язык за 7 дней» — реальный прогноз на основе твоего темпа и цели. Обновляется каждую неделю.</p>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-2">5–15 минут в день</h3>
+                    <p class="text-gray-600">Короткие уроки под твой ритм. Панда напомнит, поддержит и не даст бросить на полпути.</p>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-xl font-bold mb-2">Только законное</h3>
+                    <p class="text-gray-600">Мы учим тому, что реально полезно и этично. Никаких серых зон — только знания, которыми можно гордиться.</p>
+                </div>
+            </div>
         </div>
-        <div class="mockup-msg" style="margin-top:16px">
-          Как ты лучше всего запоминаешь новое? 🤔
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">4 шага до результата</h2>
+                <p class="text-xl text-gray-600">Начни за 2 минуты, учись всю жизнь</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="relative scroll-reveal">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">01</div>
+                    <h3 class="text-xl font-bold mb-2">Panda AI тебя изучает</h3>
+                    <p class="text-gray-600">Диалог из 6 вопросов — цель, стиль обучения, психотип, время. Занимает 2 минуты.</p>
+                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+                </div>
+                <div class="relative scroll-reveal" style="animation-delay: 0.1s">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">02</div>
+                    <h3 class="text-xl font-bold mb-2">Получаешь персональный план</h3>
+                    <p class="text-gray-600">AI строит roadmap под тебя с реальным прогнозом. Математика — математика. Английский — английский.</p>
+                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+                </div>
+                <div class="relative scroll-reveal" style="animation-delay: 0.2s">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">03</div>
+                    <h3 class="text-xl font-bold mb-2">Учишься в своём формате</h3>
+                    <p class="text-gray-600">Карточки, квизы, AI-диалог — формат подобран под твой психотип. Контент всегда с источником.</p>
+                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+                </div>
+                <div class="scroll-reveal" style="animation-delay: 0.3s">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">04</div>
+                    <h3 class="text-xl font-bold mb-2">Видишь рост каждый день</h3>
+                    <p class="text-gray-600">Стрик, XP, обновляемый прогноз. Панда отмечает каждый успех.</p>
+                </div>
+            </div>
         </div>
-        <div class="mockup-q" id="mockupOpts">
-          <button class="mockup-option" onclick="selectMockup(this)">👁 Визуально — схемы, картинки</button>
-          <button class="mockup-option" onclick="selectMockup(this)">👂 На слух — объяснения, подкасты</button>
-          <button class="mockup-option" onclick="selectMockup(this)">✍️ Практикой — делаю сам</button>
-          <button class="mockup-option" onclick="selectMockup(this)">📖 Читаю — текст и теория</button>
+    </section>
+
+    <!-- Content Preview -->
+    <section class="py-24 bg-emerald-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);"></div>
         </div>
-      </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Что внутри?</h2>
+                    <p class="text-xl text-emerald-100 mb-8">После онбординга ты получаешь доступ к персональному дашборду с контентом, который подобран специально для тебя.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Интерактивные карточки с ассоциациями</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>AI-диалоги для практики разговорного языка</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Квизы с объяснениями ошибок</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Прогресс-бар с прогнозом достижения цели</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="scroll-reveal">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-2xl">🐼</div>
+                                <div>
+                                    <div class="font-semibold">Твой дашборд</div>
+                                    <div class="text-sm text-emerald-200">День 12 из 90</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold">🔥 12</div>
+                                <div class="text-xs text-emerald-200">дней подряд</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white/10 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">📚</span>
+                                    <div>
+                                        <div class="font-medium">Урок дня</div>
+                                        <div class="text-sm text-emerald-200">Business English: Negotiations</div>
+                                    </div>
+                                </div>
+                                <button class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Начать</button>
+                            </div>
+                            <div class="bg-white/10 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">💬</span>
+                                    <div>
+                                        <div class="font-medium">Практика с AI</div>
+                                        <div class="text-sm text-emerald-200">15 минут диалога</div>
+                                    </div>
+                                </div>
+                                <button class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-semibold">Продолжить</button>
+                            </div>
+                            <div class="bg-white/10 rounded-xl p-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Прогресс к цели</span>
+                                    <span>13%</span>
+                                </div>
+                                <div class="w-full bg-white/20 rounded-full h-2">
+                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 13%"></div>
+                                </div>
+                                <div class="text-xs text-emerald-200 mt-2">Прогноз: достигнешь уровня B2 через 78 дней</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials section полностью удалена -->
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Частые вопросы</h2>
+                <p class="text-xl text-gray-600">Всё, что нужно знать перед стартом</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Это бесплатно?</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-600">
+                        Да, базовая версия полностью бесплатна. Есть ограничения на количество AI-диалогов в день (5 штук), но всё остальное доступно без ограничений. Про версия снимает лимиты и добавляет продвинутую аналитику.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Какие предметы доступны?</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-600">
+                        Сейчас доступны: Английский язык (все уровни), Математика (школьная и вузовская), История, Физика. Каждый месяц добавляем новые предметы по запросам пользователей.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Есть ли мобильное приложение?</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-600">
+                        Пока нет, но сайт полностью адаптирован под мобильные устройства. Приложение для iOS и Android в разработке — ожидаем в Q2 2026.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Как проверяется контент?</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-600">
+                        Мы используем RAG (Retrieval-Augmented Generation) — AI отвечает только на основе проверенной базы знаний: учебников Cambridge/Oxford, Wikipedia, научных статей с DOI. Каждый факт содержит ссылку на источник.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-lg">Можно ли отменить подписку?</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-4 text-gray-600">
+                        Да, в любой момент. Никаких скрытых платежей и обязательств. При отмене про-версии сохраняется доступ к бесплатной версии.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-br from-emerald-600 to-teal-700 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="text-6xl mb-6 panda-float">🐼</div>
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Начни с Panda AI сегодня</h2>
+            <p class="text-xl md:text-2xl text-emerald-100 mb-8">Бесплатно. Без карточки. 2 минуты на настройку.</p>
+            <button onclick="openModal()" class="bg-white text-emerald-700 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition transform hover:scale-105 shadow-2xl">
+                Начать бесплатно
+            </button>
+            <p class="mt-6 text-emerald-200 text-sm">Присоединяйся к первым пользователям и начни учиться умнее</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 text-white text-xl font-bold mb-4">
+                        <span>🐼</span>
+                        <span>PandaTwins</span>
+                    </div>
+                    <p class="text-sm">AI-платформа обучения нового поколения. Учись умнее, расти быстрее.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Продукт</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="hover:text-white transition">Возможности</a></li>
+                        <li><a href="#how-it-works" class="hover:text-white transition">Как это работает</a></li>
+                        <li><a href="#" class="hover:text-white transition">Цены</a></li>
+                        <li><a href="#" class="hover:text-white transition">Роадмап</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Поддержка</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition">Помощь</a></li>
+                        <li><a href="#" class="hover:text-white transition">Связаться с нами</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Контакты</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>hello@pandatwins.ai</li>
+                        <li>Telegram: @pandatwins</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm">© 2026 PandaTwins. Все права защищены.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition">Политика конфиденциальности</a>
+                    <a href="#" class="hover:text-white transition">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 relative transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="text-center">
+                <div class="text-5xl mb-4">🐼</div>
+                <h3 class="text-2xl font-bold mb-2">Начни учиться!</h3>
+                <p class="text-gray-600 mb-6">Оставь email, чтобы получить доступ к бета-версии</p>
+                <form class="space-y-4" onsubmit="handleSubmit(event)">
+                    <input type="email" placeholder="your@email.com" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition">
+                    <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition">
+                        Получить доступ
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-4">Никакого спама. Только важные обновления.</p>
+            </div>
+        </div>
     </div>
-  </div>
-</section>
 
-<!-- FAQ -->
-<section class="faq">
-  <div class="section-tag">Вопросы</div>
-  <h2 class="section-title" style="margin-bottom:32px">Часто спрашивают</h2>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      Это реально бесплатно? <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a">Да, бета-версия полностью бесплатна для первых 500 пользователей. Когда выйдем из беты — базовый план останется бесплатным, появится Premium с доп. функциями.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      Нужно ли мобильное приложение? <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a">Нет, PandaTwins работает прямо в браузере на телефоне и ПК. Приложение для iOS и Android в разработке — выйдет в 2025 году.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      Откуда берётся контент? Как он проверяется? <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a">Каждый урок создаётся на основе проверенных источников: учебники РАО, Britannica, Wikipedia с перекрёстной проверкой. AI не генерирует факты из воздуха — только из верифицированной базы.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      Подходит ли для подготовки к ЕГЭ/ОГЭ? <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a">Да! Математика и история адаптированы под формат ЕГЭ/ОГЭ. AI строит план с учётом даты экзамена и даёт честный прогноз.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      Как хранятся мои данные? <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a">Твои данные хранятся только для персонализации обучения. Мы не продаём их третьим лицам. Полная политика конфиденциальности доступна по ссылке в футере.</div>
-  </div>
-</section>
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Scroll reveal animations
+        gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
+            gsap.to(elem, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: elem,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: elem.style.animationDelay ? parseFloat(elem.style.animationDelay) : 0
+            });
+        });
 
-<!-- CTA BOTTOM -->
-<section class="cta-bottom">
-  <div>🐼</div>
-  <h2>Начни с Panda AI сегодня</h2>
-  <p>Бесплатно. Без карточки. 2 минуты на настройку.</p>
-  <button class="btn-white" onclick="openModal()">Начать бесплатно →</button>
-  <div class="cta-note">Уже 500+ человек учатся с PandaTwins</div>
-</section>
+        // Modal functions
+        function openModal() {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
 
-<!-- FOOTER -->
-<footer>
-  <div style="margin-bottom:12px">🐼 PandaTwins — AI-платформа нового поколения</div>
-  <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
-    <a href="#">Политика конфиденциальности</a>
-    <a href="#">Условия использования</a>
-    <a href="mailto:hello@pandatwins.app">hello@pandatwins.app</a>
-  </div>
-  <div style="margin-top:16px; font-size:0.78rem;">© 2025 PandaTwins. Все права защищены.</div>
-</footer>
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
 
-<!-- ONBOARDING MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal">
-    <div class="modal-header" style="position:relative">
-      <span class="modal-panda">🐼</span>
-      <div class="modal-header-text">
-        <h3>Panda AI</h3>
-        <p id="modalStepLabel">Вопрос 1 из 6</p>
-      </div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-progress-wrap">
-      <div class="modal-progress-label" id="progressLabel">0% завершено</div>
-      <div class="modal-progress-bar-outer">
-        <div class="modal-progress-bar" id="modalProgressBar" style="width:0%"></div>
-      </div>
-    </div>
-    <div id="modalContent"></div>
-  </div>
-</div>
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Спасибо! Мы отправим доступ на ваш email в ближайшее время.');
+            closeModal();
+        }
 
-<script>
-// ── FAQ ──
-function toggleFaq(el) {
-  const item = el.parentElement;
-  item.classList.toggle('open');
-}
+        function scrollToDemo() {
+            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+        }
 
-// ── Fade-in on scroll ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const arrow = btn.querySelector('svg');
+            content.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
 
-// ── Mockup interaction ──
-function selectMockup(btn) {
-  document.querySelectorAll('.mockup-option').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('mockupBar').style.width = '66%';
-}
-
-// ── ONBOARDING MODAL ──
-const questions = [
-  {
-    q: 'Привет! Я Panda AI 🐼 Как тебя зовут?',
-    type: 'input',
-    placeholder: 'Введи своё имя...',
-    key: 'name'
-  },
-  {
-    q: 'Что хочешь учить, {name}?',
-    type: 'options',
-    key: 'subject',
-    options: [
-      { icon: '🇬🇧', label: 'Английский язык' },
-      { icon: '➗', label: 'Математика' },
-      { icon: '📜', label: 'История' },
-      { icon: '🎯', label: 'Другое (скоро)' },
-    ]
-  },
-  {
-    q: 'Какая у тебя цель?',
-    type: 'options',
-    key: 'goal',
-    options: [
-      { icon: '📝', label: 'Подготовка к ЕГЭ/ОГЭ' },
-      { icon: '✈️', label: 'Путешествия и жизнь за рубежом' },
-      { icon: '💼', label: 'Карьера и работа' },
-      { icon: '🧠', label: 'Просто для себя' },
-    ]
-  },
-  {
-    q: 'Как ты лучше всего запоминаешь?',
-    type: 'options',
-    key: 'style',
-    options: [
-      { icon: '👁', label: 'Визуально — схемы и картинки' },
-      { icon: '✍️', label: 'Практикой — делаю сам' },
-      { icon: '📖', label: 'Читаю — текст и теория' },
-      { icon: '💬', label: 'Обсуждаю — диалог и вопросы' },
-    ]
-  },
-  {
-    q: 'Сколько времени в день готов уделять?',
-    type: 'options',
-    key: 'time',
-    options: [
-      { icon: '⚡', label: '5 минут — быстро и в ритме' },
-      { icon: '🎯', label: '15 минут — стабильно' },
-      { icon: '🔥', label: '30 минут — интенсивно' },
-      { icon: '💪', label: '1 час — максимум' },
-    ]
-  },
-  {
-    q: 'Последний вопрос — твой уровень сейчас?',
-    type: 'options',
-    key: 'level',
-    options: [
-      { icon: '🌱', label: 'Новичок — начинаю с нуля' },
-      { icon: '📗', label: 'Базовый — знаю основы' },
-      { icon: '📘', label: 'Средний — хочу углубиться' },
-      { icon: '📙', label: 'Продвинутый — шлифую детали' },
-    ]
-  }
-];
-
-let currentStep = 0;
-let answers = {};
-let selectedOpt = null;
-
-function openModal() {
-  currentStep = 0;
-  answers = {};
-  document.getElementById('modalOverlay').classList.add('open');
-  renderStep();
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-
-function renderStep() {
-  selectedOpt = answers[questions[currentStep]?.key] || null;
-  const total = questions.length;
-  const pct = Math.round((currentStep / total) * 100);
-  document.getElementById('modalProgressBar').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = pct + '% завершено';
-  document.getElementById('modalStepLabel').textContent = `Вопрос ${currentStep + 1} из ${total}`;
-
-  if (currentStep >= total) { renderResult(); return; }
-
-  const q = questions[currentStep];
-  const qText = q.q.replace('{name}', answers.name || '');
-
-  let html = `<div class="modal-body"><div class="modal-question">${qText}</div>`;
-  if (q.type === 'input') {
-    html += `<input class="modal-input" id="modalInput" placeholder="${q.placeholder}" value="${answers[q.key]||''}" oninput="onInput(this)">`;
-  } else {
-    html += `<div class="modal-options">`;
-    q.options.forEach((opt, i) => {
-      const sel = answers[q.key] === opt.label ? ' selected' : '';
-      html += `<button class="modal-opt${sel}" onclick="selectOpt(this,'${opt.label.replace(/'/g,"\\'")}')"><span class="modal-opt-icon">${opt.icon}</span>${opt.label}</button>`;
-    });
-    html += `</div>`;
-  }
-  html += `</div>`;
-  html += `<div class="modal-footer">
-    <button class="btn-modal-back" onclick="goBack()" ${currentStep===0?'style="visibility:hidden"':''}>← Назад</button>
-    <button class="btn-modal-next" id="modalNextBtn" onclick="goNext()" ${!answers[q.key]?'disabled':''}>
-      ${currentStep === total-1 ? 'Создать план 🐼' : 'Далее →'}
-    </button>
-  </div>`;
-
-  document.getElementById('modalContent').innerHTML = html;
-
-  if (q.type === 'input') {
-    const inp = document.getElementById('modalInput');
-    inp.focus();
-    inp.addEventListener('keydown', e => { if (e.key==='Enter' && answers[q.key]) goNext(); });
-  }
-}
-
-function onInput(el) {
-  answers[questions[currentStep].key] = el.value.trim();
-  document.getElementById('modalNextBtn').disabled = !el.value.trim();
-}
-function selectOpt(btn, val) {
-  document.querySelectorAll('.modal-opt').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  answers[questions[currentStep].key] = val;
-  document.getElementById('modalNextBtn').disabled = false;
-}
-function goNext() {
-  if (!answers[questions[currentStep].key]) return;
-  currentStep++;
-  renderStep();
-}
-function goBack() {
-  if (currentStep > 0) { currentStep--; renderStep(); }
-}
-
-function renderResult() {
-  document.getElementById('modalProgressBar').style.width = '100%';
-  document.getElementById('progressLabel').textContent = '100% завершено';
-  document.getElementById('modalStepLabel').textContent = 'План готов!';
-
-  const timeMap = { '5 минут — быстро и в ритме': 6, '15 минут — стабильно': 4, '30 минут — интенсивно': 3, '1 час — максимум': 2 };
-  const weeks = timeMap[answers.time] || 6;
-  const styleMap = { 'Визуально — схемы и картинки': 'Карточки + схемы', 'Практикой — делаю сам': 'Практические задания', 'Читаю — текст и теория': 'Текстовые уроки', 'Обсуждаю — диалог и вопросы': 'AI-диалог' };
-  const format = styleMap[answers.style] || 'Смешанный формат';
-
-  document.getElementById('modalContent').innerHTML = `
-    <div class="modal-result">
-      <div class="result-panda">🐼</div>
-      <div class="result-title">Привет, ${answers.name || 'друг'}! Твой план готов</div>
-      <div class="result-sub">Panda AI построила персональный roadmap специально для тебя</div>
-      <div class="result-plan">
-        <h4>Твой план</h4>
-        <div class="result-row"><span class="result-row-label">Предмет</span><span class="result-row-val">${answers.subject || '—'}</span></div>
-        <div class="result-row"><span class="result-row-label">Цель</span><span class="result-row-val">${answers.goal || '—'}</span></div>
-        <div class="result-row"><span class="result-row-label">Формат</span><span class="result-row-val">${format}</span></div>
-        <div class="result-row"><span class="result-row-label">Время в день</span><span class="result-row-val">${answers.time?.split('—')[0] || '—'}</span></div>
-        <div class="result-row"><span class="result-row-label">Прогноз</span><span class="result-row-val green">~${weeks} недель до цели</span></div>
-      </div>
-      <button class="btn-primary" style="width:100%; padding:15px;" onclick="closeModal()">Начать обучение 🚀</button>
-      <div style="margin-top:10px; font-size:0.8rem; color:var(--gray); font-weight:600;">Прогноз обновляется еженедельно на основе твоего прогресса</div>
-    </div>
-  `;
-}
-</script>
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
 </body>
 </html>
 document.addEventListener('DOMContentLoaded',()=>{obInit()});
