@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PandaTwins — AI-платформа обучения с персональным AI-учителем, планом под ваш психотип и живой пандой-компаньоном. Только проверенный контент.">
-    <meta property="og:title" content="PandaTwins — Учись умнее. Расти быстрее.">
-    <meta property="og:description" content="Персональный AI-учитель, план под твой психотип и живая панда-компаньон. Только проверенный контент.">
+    <meta name="description" content="PandaTwins — AI-платформа обучения с персональным AI-учителем и готовыми уроками английского языка. Учись бесплатно и без регистрации.">
+    <meta property="og:title" content="PandaTwins — Уроки английского с AI">
+    <meta property="og:description" content="Интерактивные уроки английского с персональным AI-учителем. Выбери тему и начни заниматься прямо сейчас.">
     <meta property="og:image" content="https://last-bfmg.vercel.app/og-image.png">
     <meta property="og:type" content="website">
-    <title>PandaTwins — Учись умнее. Расти быстрее.</title>
+    <title>PandaTwins — Уроки английского с AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -44,27 +44,21 @@
             opacity: 0.4;
             z-index: -1;
         }
-        .chat-bubble {
-            animation: popIn 0.5s ease-out forwards;
-            opacity: 0;
-            transform: scale(0.8);
+        .lesson-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-        .feature-card:hover {
+        .lesson-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         .step-number {
             background: linear-gradient(135deg, #059669 0%, #10b981 100%);
         }
-        .cta-pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+        .active-subject {
+            background-color: #10b981;
+            color: white;
+            border-color: #10b981;
         }
     </style>
 </head>
@@ -79,14 +73,14 @@
                     <span class="font-bold text-xl">PandaTwins</span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#features" class="text-gray-600 hover:text-emerald-600 transition">Возможности</a>
+                    <a href="#subjects" class="text-gray-600 hover:text-emerald-600 transition">Предметы</a>
+                    <a href="#lessons" class="text-gray-600 hover:text-emerald-600 transition">Уроки</a>
                     <a href="#how-it-works" class="text-gray-600 hover:text-emerald-600 transition">Как работает</a>
-                    <a href="#demo" class="text-gray-600 hover:text-emerald-600 transition">Демо</a>
                     <a href="#faq" class="text-gray-600 hover:text-emerald-600 transition">FAQ</a>
                 </div>
-                <button onclick="openModal()" class="bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-emerald-700 transition cta-pulse">
-                    Начать бесплатно
-                </button>
+                <a href="#lessons" class="bg-emerald-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-emerald-700 transition">
+                    Начать урок
+                </a>
             </div>
         </div>
     </nav>
@@ -101,41 +95,41 @@
                 <div class="scroll-reveal">
                     <div class="inline-flex items-center bg-emerald-100 text-emerald-800 px-4 py-2 rounded-full text-sm font-semibold mb-6">
                         <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                        Бета-версия уже доступна
+                        Уроки уже доступны
                     </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-                        Учись умнее.<br>
-                        <span class="gradient-text">Расти быстрее.</span>
+                        Учи английский<br>
+                        <span class="gradient-text">с AI-учителем</span>
                     </h1>
                     <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        Персональный AI-учитель, план под твой психотип и живая панда-компаньон. 
-                        <span class="font-semibold text-emerald-600">Только проверенный контент</span> — никакого фейка.
+                        Персональные уроки, адаптированные под твой уровень. 
+                        <span class="font-semibold text-emerald-600">Без регистрации и SMS</span> — просто выбери тему и начни.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button onclick="openModal()" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105 cta-pulse flex items-center justify-center gap-2">
-                            Начать бесплатно
+                        <a href="#subjects" class="bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-emerald-700 transition transform hover:scale-105 flex items-center justify-center gap-2">
+                            Выбрать урок
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                        </button>
-                        <button onclick="scrollToDemo()" class="bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-full font-bold text-lg hover:border-emerald-500 hover:text-emerald-600 transition flex items-center justify-center gap-2">
+                        </a>
+                        <a href="#how-it-works" class="bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-full font-bold text-lg hover:border-emerald-500 hover:text-emerald-600 transition flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Смотреть демо
-                        </button>
+                            Как это работает
+                        </a>
                     </div>
                     <div class="mt-8 flex items-center gap-6 text-sm text-gray-500">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            Без карты
+                            Бесплатно
                         </div>
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            2 минуты настройки
+                            Без регистрации
                         </div>
                     </div>
                 </div>
                 <div class="relative scroll-reveal">
                     <div class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl transform rotate-3 opacity-20"></div>
                     <div class="relative bg-white rounded-3xl shadow-2xl p-6 border border-gray-100">
-                        <!-- Mock Interface -->
+                        <!-- Mock AI chat -->
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b">
                             <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-2xl">🐼</div>
                             <div>
@@ -145,45 +139,13 @@
                         </div>
                         <div class="space-y-3">
                             <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 0.2s">
-                                Привет! Я твой AI-учитель 🎋 Давай настроим твой план обучения?
+                                Let's start your English lesson! 🎋 Today we'll learn about greetings.
                             </div>
                             <div class="chat-bubble bg-emerald-100 rounded-2xl rounded-tr-none p-3 max-w-[80%] ml-auto text-emerald-900" style="animation-delay: 0.6s">
-                                Да! Хочу выучить английский для работы
+                                Hi! How do I say "Good morning" informally?
                             </div>
                             <div class="chat-bubble bg-gray-100 rounded-2xl rounded-tl-none p-3 max-w-[80%]" style="animation-delay: 1s">
-                                Отлично! Какой у тебя уровень сейчас?
-                            </div>
-                            <div class="flex gap-2 mt-4" style="animation-delay: 1.4s">
-                                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Начальный</span>
-                                <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">Средний</span>
-                                <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">Продвинутый</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-4 border-t flex items-center gap-2">
-                            <div class="flex-1 bg-gray-100 rounded-full h-10 flex items-center px-4 text-gray-400 text-sm">
-                                Напиши сообщение...
-                            </div>
-                            <button class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Floating elements -->
-                    <div class="absolute -top-4 -right-4 bg-white rounded-2xl shadow-lg p-3 panda-float">
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl">🔥</span>
-                            <div>
-                                <div class="text-xs text-gray-500">Стрик</div>
-                                <div class="font-bold text-emerald-600">12 дней</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-lg p-3 panda-float" style="animation-delay: 0.5s">
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl">⭐</span>
-                            <div>
-                                <div class="text-xs text-gray-500">XP сегодня</div>
-                                <div class="font-bold text-purple-600">+450</div>
+                                You can say "Morning!" or "Hey, good morning!" 😊
                             </div>
                         </div>
                     </div>
@@ -192,231 +154,86 @@
         </div>
     </section>
 
-    <!-- Trust Indicators -->
-    <section class="py-12 bg-white border-y border-gray-100">
+    <!-- Subjects Selection -->
+    <section id="subjects" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="scroll-reveal">
-                    <div class="text-3xl font-bold text-emerald-600">∞</div>
-                    <div class="text-sm text-gray-600 mt-1">Предметов</div>
-                </div>
-                <div class="scroll-reveal">
-                    <div class="text-3xl font-bold text-emerald-600">100%</div>
-                    <div class="text-sm text-gray-600 mt-1">Проверенные источники</div>
-                </div>
-                <div class="scroll-reveal">
-                    <div class="text-3xl font-bold text-emerald-600">15 мин</div>
-                    <div class="text-sm text-gray-600 mt-1">В день</div>
-                </div>
-                <div class="scroll-reveal">
-                    <div class="text-3xl font-bold text-emerald-600">0₽</div>
-                    <div class="text-sm text-gray-600 mt-1">Для старта</div>
-                </div>
+            <div class="text-center mb-10 scroll-reveal">
+                <h2 class="text-4xl font-bold mb-2">Выбери предмет</h2>
+                <p class="text-gray-600">Пока мы запустили английский, но скоро добавим новые языки</p>
+            </div>
+            <div class="flex justify-center gap-4 scroll-reveal">
+                <button class="subject-btn active-subject px-8 py-4 rounded-full border-2 border-emerald-600 font-semibold text-lg transition-all" data-subject="english">
+                    🇬🇧 Английский
+                </button>
+                <button class="subject-btn px-8 py-4 rounded-full border-2 border-gray-200 font-semibold text-lg text-gray-400 cursor-not-allowed" disabled>
+                    🇪🇸 Испанский (скоро)
+                </button>
+                <button class="subject-btn px-8 py-4 rounded-full border-2 border-gray-200 font-semibold text-lg text-gray-400 cursor-not-allowed" disabled>
+                    🇫🇷 Французский (скоро)
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- AI Chat Feature Highlight -->
-    <section id="demo" class="py-24 bg-gradient-to-br from-emerald-50 to-teal-50 relative overflow-hidden">
-        <div class="blob bg-emerald-200 w-64 h-64 top-0 right-0 opacity-30"></div>
+    <!-- Lessons Grid -->
+    <section id="lessons" class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 scroll-reveal">
-                <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Главная фича</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-2 mb-4">AI-чат с учителем 24/7</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Задавай любые вопросы, получай объяснения, практикуй разговорный язык. Твой личный репетитор всегда на связи.</p>
+            <div class="text-center mb-12 scroll-reveal">
+                <h2 class="text-4xl font-bold mb-2">Уроки по английскому</h2>
+                <p class="text-gray-600">Выбери тему и начни заниматься с AI-учителем</p>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300">
-                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-3xl mb-4">💬</div>
-                    <h3 class="text-xl font-bold mb-2">Естественный диалог</h3>
-                    <p class="text-gray-600">Разговаривай как с человеком. AI понимает контекст и адаптируется под твой уровень.</p>
-                </div>
-                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300" style="animation-delay: 0.1s">
-                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-3xl mb-4">📚</div>
-                    <h3 class="text-xl font-bold mb-2">Проверка фактов</h3>
-                    <p class="text-gray-600">Каждый факт привязан к источнику: Wikipedia, научным статьям, учебникам. Никаких галлюцинаций.</p>
-                </div>
-                <div class="glass-card rounded-3xl p-8 scroll-reveal feature-card transition-all duration-300" style="animation-delay: 0.2s">
-                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl mb-4">🎯</div>
-                    <h3 class="text-xl font-bold mb-2">Персонализация</h3>
-                    <p class="text-gray-600">Помнит твои ошибки, знает твои цели, подстраивается под твой темп обучения.</p>
-                </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="lessonsContainer">
+                <!-- Уроки будут вставлены динамически через JS, но для примера сделаем статически -->
             </div>
         </div>
     </section>
 
-    <!-- Features Grid -->
-    <section id="features" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Образование, которое работает</h2>
-                <p class="text-xl text-gray-600">Никаких шаблонных курсов — только персональный подход</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">🧠</div>
-                    <h3 class="text-xl font-bold mb-2">AI-психолог на старте</h3>
-                    <p class="text-gray-600">Panda AI задаёт умные вопросы и строит план под твой психотип — не шаблонный курс, а твой личный путь.</p>
-                </div>
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">✅</div>
-                    <h3 class="text-xl font-bold mb-2">Только правда</h3>
-                    <p class="text-gray-600">Каждый факт привязан к проверенному источнику. AI честно скажет если не знает — никаких выдуманных ответов.</p>
-                </div>
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">🎯</div>
-                    <h3 class="text-xl font-bold mb-2">Под твой психотип</h3>
-                    <p class="text-gray-600">Эмпат, интроверт, визуал, практик — уроки адаптированы под то, как именно ты воспринимаешь мир.</p>
-                </div>
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">📈</div>
-                    <h3 class="text-xl font-bold mb-2">Честный прогноз</h3>
-                    <p class="text-gray-600">Не «выучи язык за 7 дней» — реальный прогноз на основе твоего темпа и цели. Обновляется каждую неделю.</p>
-                </div>
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">⚡</div>
-                    <h3 class="text-xl font-bold mb-2">5–15 минут в день</h3>
-                    <p class="text-gray-600">Короткие уроки под твой ритм. Панда напомнит, поддержит и не даст бросить на полпути.</p>
-                </div>
-                <div class="bg-gray-50 rounded-3xl p-8 scroll-reveal hover:shadow-xl transition-all duration-300 border border-gray-100">
-                    <div class="text-4xl mb-4">🔒</div>
-                    <h3 class="text-xl font-bold mb-2">Только законное</h3>
-                    <p class="text-gray-600">Мы учим тому, что реально полезно и этично. Никаких серых зон — только знания, которыми можно гордиться.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
+    <!-- How It Works (сокращенно) -->
     <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">4 шага до результата</h2>
-                <p class="text-xl text-gray-600">Начни за 2 минуты, учись всю жизнь</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Как проходят уроки</h2>
+                <p class="text-xl text-gray-600">Просто, интересно и эффективно</p>
             </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="relative scroll-reveal">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">01</div>
-                    <h3 class="text-xl font-bold mb-2">Panda AI тебя изучает</h3>
-                    <p class="text-gray-600">Диалог из 6 вопросов — цель, стиль обучения, психотип, время. Занимает 2 минуты.</p>
-                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center scroll-reveal">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">01</div>
+                    <h3 class="text-xl font-bold mb-2">Выбираешь тему</h3>
+                    <p class="text-gray-600">Из списка уроков выбираешь то, что хочешь изучить сегодня.</p>
                 </div>
-                <div class="relative scroll-reveal" style="animation-delay: 0.1s">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">02</div>
-                    <h3 class="text-xl font-bold mb-2">Получаешь персональный план</h3>
-                    <p class="text-gray-600">AI строит roadmap под тебя с реальным прогнозом. Математика — математика. Английский — английский.</p>
-                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
+                <div class="text-center scroll-reveal" style="animation-delay: 0.1s">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">02</div>
+                    <h3 class="text-xl font-bold mb-2">Общаешься с AI</h3>
+                    <p class="text-gray-600">Panda AI объясняет, задаёт вопросы и помогает практиковаться.</p>
                 </div>
-                <div class="relative scroll-reveal" style="animation-delay: 0.2s">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">03</div>
-                    <h3 class="text-xl font-bold mb-2">Учишься в своём формате</h3>
-                    <p class="text-gray-600">Карточки, квизы, AI-диалог — формат подобран под твой психотип. Контент всегда с источником.</p>
-                    <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-emerald-400 to-transparent"></div>
-                </div>
-                <div class="scroll-reveal" style="animation-delay: 0.3s">
-                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4">04</div>
-                    <h3 class="text-xl font-bold mb-2">Видишь рост каждый день</h3>
-                    <p class="text-gray-600">Стрик, XP, обновляемый прогноз. Панда отмечает каждый успех.</p>
+                <div class="text-center scroll-reveal" style="animation-delay: 0.2s">
+                    <div class="step-number w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-4 mx-auto">03</div>
+                    <h3 class="text-xl font-bold mb-2">Закрепляешь результат</h3>
+                    <p class="text-gray-600">После урока получишь рекомендации, что повторить.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Content Preview -->
-    <section class="py-24 bg-emerald-900 text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);"></div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="scroll-reveal">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Что внутри?</h2>
-                    <p class="text-xl text-emerald-100 mb-8">После онбординга ты получаешь доступ к персональному дашборду с контентом, который подобран специально для тебя.</p>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Интерактивные карточки с ассоциациями</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>AI-диалоги для практики разговорного языка</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Квизы с объяснениями ошибок</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Прогресс-бар с прогнозом достижения цели</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="scroll-reveal">
-                    <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20">
-                        <div class="flex items-center justify-between mb-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-2xl">🐼</div>
-                                <div>
-                                    <div class="font-semibold">Твой дашборд</div>
-                                    <div class="text-sm text-emerald-200">День 12 из 90</div>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-2xl font-bold">🔥 12</div>
-                                <div class="text-xs text-emerald-200">дней подряд</div>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="bg-white/10 rounded-xl p-4 flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-2xl">📚</span>
-                                    <div>
-                                        <div class="font-medium">Урок дня</div>
-                                        <div class="text-sm text-emerald-200">Business English: Negotiations</div>
-                                    </div>
-                                </div>
-                                <button class="bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Начать</button>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-4 flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-2xl">💬</span>
-                                    <div>
-                                        <div class="font-medium">Практика с AI</div>
-                                        <div class="text-sm text-emerald-200">15 минут диалога</div>
-                                    </div>
-                                </div>
-                                <button class="bg-white/20 text-white px-4 py-2 rounded-full text-sm font-semibold">Продолжить</button>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-4">
-                                <div class="flex justify-between text-sm mb-2">
-                                    <span>Прогресс к цели</span>
-                                    <span>13%</span>
-                                </div>
-                                <div class="w-full bg-white/20 rounded-full h-2">
-                                    <div class="bg-emerald-400 h-2 rounded-full" style="width: 13%"></div>
-                                </div>
-                                <div class="text-xs text-emerald-200 mt-2">Прогноз: достигнешь уровня B2 через 78 дней</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- CTA без регистрации -->
+    <section class="py-24 bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="text-6xl mb-6 panda-float">🐼</div>
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Готов начать?</h2>
+            <p class="text-xl md:text-2xl text-emerald-100 mb-8">Выбери любой урок и занимайся прямо сейчас. Без регистрации.</p>
+            <a href="#subjects" class="bg-white text-emerald-700 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition transform hover:scale-105 shadow-2xl inline-block">
+                К урокам
+            </a>
         </div>
     </section>
 
-    <!-- Testimonials section полностью удалена -->
-
-    <!-- FAQ Section -->
+    <!-- FAQ (сокращенный) -->
     <section id="faq" class="py-24 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="text-4xl md:text-5xl font-bold mb-4">Частые вопросы</h2>
                 <p class="text-xl text-gray-600">Всё, что нужно знать перед стартом</p>
             </div>
-            
             <div class="space-y-4">
                 <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
@@ -424,138 +241,38 @@
                         <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div class="hidden px-6 pb-4 text-gray-600">
-                        Да, базовая версия полностью бесплатна. Есть ограничения на количество AI-диалогов в день (5 штук), но всё остальное доступно без ограничений. Про версия снимает лимиты и добавляет продвинутую аналитику.
+                        Да, все уроки полностью бесплатны. Никаких подписок и скрытых платежей.
                     </div>
                 </div>
                 <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
                     <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Какие предметы доступны?</span>
+                        <span class="font-semibold text-lg">Нужна регистрация?</span>
                         <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div class="hidden px-6 pb-4 text-gray-600">
-                        Сейчас доступны: Английский язык (все уровни), Математика (школьная и вузовская), История, Физика. Каждый месяц добавляем новые предметы по запросам пользователей.
-                    </div>
-                </div>
-                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Есть ли мобильное приложение?</span>
-                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="hidden px-6 pb-4 text-gray-600">
-                        Пока нет, но сайт полностью адаптирован под мобильные устройства. Приложение для iOS и Android в разработке — ожидаем в Q2 2026.
-                    </div>
-                </div>
-                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Как проверяется контент?</span>
-                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="hidden px-6 pb-4 text-gray-600">
-                        Мы используем RAG (Retrieval-Augmented Generation) — AI отвечает только на основе проверенной базы знаний: учебников Cambridge/Oxford, Wikipedia, научных статей с DOI. Каждый факт содержит ссылку на источник.
-                    </div>
-                </div>
-                <div class="border border-gray-200 rounded-2xl overflow-hidden scroll-reveal">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition" onclick="toggleFaq(this)">
-                        <span class="font-semibold text-lg">Можно ли отменить подписку?</span>
-                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="hidden px-6 pb-4 text-gray-600">
-                        Да, в любой момент. Никаких скрытых платежей и обязательств. При отмене про-версии сохраняется доступ к бесплатной версии.
+                        Нет, регистрация не требуется. Просто выбери урок и начинай.
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-24 bg-gradient-to-br from-emerald-600 to-teal-700 text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
-        </div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="text-6xl mb-6 panda-float">🐼</div>
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">Начни с Panda AI сегодня</h2>
-            <p class="text-xl md:text-2xl text-emerald-100 mb-8">Бесплатно. Без карточки. 2 минуты на настройку.</p>
-            <button onclick="openModal()" class="bg-white text-emerald-700 px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-100 transition transform hover:scale-105 shadow-2xl">
-                Начать бесплатно
-            </button>
-            <p class="mt-6 text-emerald-200 text-sm">Присоединяйся к первым пользователям и начни учиться умнее</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-2 text-white text-xl font-bold mb-4">
-                        <span>🐼</span>
-                        <span>PandaTwins</span>
-                    </div>
-                    <p class="text-sm">AI-платформа обучения нового поколения. Учись умнее, расти быстрее.</p>
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-2 text-white text-xl font-bold mb-4 md:mb-0">
+                    <span>🐼</span>
+                    <span>PandaTwins</span>
                 </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Продукт</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#features" class="hover:text-white transition">Возможности</a></li>
-                        <li><a href="#how-it-works" class="hover:text-white transition">Как это работает</a></li>
-                        <li><a href="#" class="hover:text-white transition">Цены</a></li>
-                        <li><a href="#" class="hover:text-white transition">Роадмап</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Поддержка</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
-                        <li><a href="#" class="hover:text-white transition">Помощь</a></li>
-                        <li><a href="#" class="hover:text-white transition">Связаться с нами</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Контакты</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li>hello@pandatwins.ai</li>
-                        <li>Telegram: @pandatwins</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm">© 2026 PandaTwins. Все права защищены.</p>
-                <div class="flex gap-4 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition">Политика конфиденциальности</a>
-                    <a href="#" class="hover:text-white transition">Условия использования</a>
-                </div>
+                <p class="text-sm">© 2026 PandaTwins. Учись в удовольствие.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-8 relative transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <div class="text-center">
-                <div class="text-5xl mb-4">🐼</div>
-                <h3 class="text-2xl font-bold mb-2">Начни учиться!</h3>
-                <p class="text-gray-600 mb-6">Оставь email, чтобы получить доступ к бета-версии</p>
-                <form class="space-y-4" onsubmit="handleSubmit(event)">
-                    <input type="email" placeholder="your@email.com" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-emerald-500 transition">
-                    <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition">
-                        Получить доступ
-                    </button>
-                </form>
-                <p class="text-xs text-gray-500 mt-4">Никакого спама. Только важные обновления.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // GSAP Animations
+        // Инициализация GSAP
         gsap.registerPlugin(ScrollTrigger);
-        
-        // Scroll reveal animations
         gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
             gsap.to(elem, {
                 opacity: 1,
@@ -571,39 +288,7 @@
             });
         });
 
-        // Modal functions
-        function openModal() {
-            const modal = document.getElementById('modal');
-            const content = document.getElementById('modalContent');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const content = document.getElementById('modalContent');
-            content.classList.remove('scale-100', 'opacity-100');
-            content.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }, 300);
-        }
-
-        function handleSubmit(e) {
-            e.preventDefault();
-            alert('Спасибо! Мы отправим доступ на ваш email в ближайшее время.');
-            closeModal();
-        }
-
-        function scrollToDemo() {
-            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
-        }
-
+        // Функция для аккордеона FAQ
         function toggleFaq(btn) {
             const content = btn.nextElementSibling;
             const arrow = btn.querySelector('svg');
@@ -611,9 +296,68 @@
             arrow.classList.toggle('rotate-180');
         }
 
-        // Close modal on outside click
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+        // Данные уроков (английский)
+        const lessons = [
+            { id: 1, title: 'Greetings and Introductions', level: 'Начинающий', duration: 10, description: 'Научись приветствовать и представляться на английском.' },
+            { id: 2, title: 'Present Simple: Daily Routine', level: 'Начинающий', duration: 15, description: 'Изучи простое настоящее время на примере рутины.' },
+            { id: 3, title: 'Ordering Food in a Restaurant', level: 'Средний', duration: 12, description: 'Фразы и диалоги для заказа еды за границей.' },
+            { id: 4, title: 'Business English: Small Talk', level: 'Продвинутый', duration: 20, description: 'Как поддержать светскую беседу с коллегами.' },
+            { id: 5, title: 'Past Simple: Talking about Weekend', level: 'Средний', duration: 12, description: 'Расскажи о выходных, используя прошедшее время.' },
+            { id: 6, title: 'Phone Call Etiquette', level: 'Продвинутый', duration: 18, description: 'Правила и фразы для деловых звонков.' },
+        ];
+
+        // Рендер уроков
+        const container = document.getElementById('lessonsContainer');
+        function renderLessons() {
+            container.innerHTML = '';
+            lessons.forEach(lesson => {
+                const card = document.createElement('div');
+                card.className = 'lesson-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md scroll-reveal';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-semibold px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full">${lesson.level}</span>
+                        <span class="text-xs text-gray-400">${lesson.duration} мин</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">${lesson.title}</h3>
+                    <p class="text-gray-600 text-sm mb-4">${lesson.description}</p>
+                    <button onclick="startLesson('${lesson.title}')" class="w-full bg-emerald-50 text-emerald-700 py-2 rounded-full font-semibold hover:bg-emerald-100 transition">Начать урок</button>
+                `;
+                container.appendChild(card);
+            });
+
+            // Обновляем scroll reveal для новых элементов
+            gsap.utils.toArray('.scroll-reveal').forEach((elem, i) => {
+                gsap.to(elem, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    },
+                    delay: elem.style.animationDelay ? parseFloat(elem.style.animationDelay) : 0
+                });
+            });
+        }
+
+        // Запуск урока (имитация)
+        window.startLesson = function(lessonTitle) {
+            alert(`Урок "${lessonTitle}" запущен! В настоящей версии здесь откроется чат с AI-учителем.`);
+        };
+
+        // При загрузке страницы рендерим уроки
+        document.addEventListener('DOMContentLoaded', renderLessons);
+
+        // Переключение предметов (пока только английский активен)
+        document.querySelectorAll('.subject-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active-subject'));
+                this.classList.add('active-subject');
+                // Здесь можно было бы загружать уроки для выбранного предмета, но пока только английский
+            });
         });
     </script>
 </body>
